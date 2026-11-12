@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AudioProvider } from "@/context/AudioContext";
 
 export const metadata: Metadata = {
   title: "SoundForge SFX — 1,400+ Free Royalty-Free Sound Effects",
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className="bg-studio-bg text-studio-text min-h-screen flex flex-col antialiased selection:bg-studio-cyan selection:text-black">
-        {children}
+        <AudioProvider>
+          {children}
+        </AudioProvider>
       </body>
     </html>
   );
