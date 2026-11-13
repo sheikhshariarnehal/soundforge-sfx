@@ -9,6 +9,7 @@ export interface SoundItem {
   audioUrl: string;
   r2Key: string;
   pixabayUrl: string;
+  peaks?: number[];
 }
 
 export interface CategoryInfo {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Play, Pause, Download, Volume2, Check } from "lucide-react";
+import { Play, Pause, Download, Check } from "lucide-react";
 import { SoundItem } from "@/lib/types";
 import { useAudio } from "@/context/AudioContext";
 import { Waveform } from "./Waveform";
@@ -21,7 +21,7 @@ function formatDuration(seconds: number): string {
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 }
 
-export function SoundCard({ sound, viewMode = "grid" }: SoundCardProps) {
+export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
   const { activeSound, isPlaying, currentTime, playSound, seekTo } = useAudio();
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
@@ -53,46 +53,49 @@ export function SoundCard({ sound, viewMode = "grid" }: SoundCardProps) {
     return (
       <div
         onClick={() => playSound(sound)}
-        className={`group flex items-center justify-between gap-4 p-3.5 rounded-xl border transition-all duration-200 cursor-pointer ${
+        className={`group flex items-center justify-between gap-3 sm:gap-4 px-3 sm:px-4 py-2.5 rounded-lg transition-colors cursor-pointer border-b border-studio-border/30 ${
           isActive
-            ? "bg-studio-card/90 border-studio-cyan/60 shadow-lg shadow-studio-cyan/5"
-            : "bg-studio-surface/50 border-studio-border/70 hover:bg-studio-card/60 hover:border-studio-borderLight"
+            ? "bg-studio-surface/90 text-white"
+            : "hover:bg-studio-surface/40 text-studio-text"
         }`}
       >
         {/* Play/Pause Button */}
         <button
           type="button"
           onClick={handlePlayToggle}
-          className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-transform transform active:scale-95 ${
+          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
             isThisPlaying
-              ? "bg-studio-cyan text-black shadow-md shadow-studio-cyan/30"
-              : "bg-studio-border/80 text-studio-text hover:bg-studio-cyan hover:text-black group-hover:scale-105"
+              ? "bg-studio-cyan text-black"
+              : "bg-studio-surface text-studio-muted group-hover:text-white group-hover:bg-studio-border"
           }`}
           aria-label={isThisPlaying ? "Pause" : "Play"}
         >
-          {isThisPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
+          {isThisPlaying ? (
+            <Pause className="w-3.5 h-3.5 fill-current" />
+          ) : (
+            <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
+          )}
         </button>
 
-        {/* Title, Category & Creator */}
-        <div className="min-w-[180px] max-w-[260px] truncate">
-          <h3 className="font-medium text-sm text-studio-text truncate group-hover:text-studio-cyan transition-colors">
+        {/* Title & Category */}
+        <div className="min-w-[140px] sm:min-w-[200px] max-w-[240px] truncate">
+          <div className="font-medium text-xs sm:text-sm truncate text-white group-hover:text-studio-cyan transition-colors">
             {sound.title}
-          </h3>
-          <div className="flex items-center gap-2 text-xs text-studio-muted mt-0.5">
-            <span className="capitalize px-1.5 py-0.5 rounded bg-studio-border/60 text-studio-cyan/90 font-mono text-[11px]">
-              {sound.category}
-            </span>
-            {sound.creator && <span className="truncate">by {sound.creator}</span>}
+          </div>
+          <div className="text-[11px] text-studio-muted truncate flex items-center gap-1.5">
+            <span className="capitalize">{sound.category}</span>
+            {sound.creator && <span className="opacity-60">• {sound.creator}</span>}
           </div>
         </div>
 
-        {/* Interactive Waveform */}
-        <div className="flex-1 max-w-xl mx-2">
+        {/* Waveform */}
+        <div className="flex-1 max-w-xl mx-1 sm:mx-3">
           <Waveform
             id={sound.id}
             duration={sound.duration}
             currentTime={isActive ? currentTime : 0}
             isActive={isActive}
+            peaks={sound.peaks}
             onSeek={(sec) => {
               if (!isActive) playSound(sound);
               seekTo(sec);
@@ -101,69 +104,68 @@ export function SoundCard({ sound, viewMode = "grid" }: SoundCardProps) {
         </div>
 
         {/* Duration */}
-        <div className="text-xs font-mono text-studio-muted min-w-[50px] text-right">
+        <div className="text-xs font-mono text-studio-muted min-w-[42px] text-right">
           {formatDuration(sound.duration)}
         </div>
 
-        {/* 1-Click Download Button */}
+        {/* Download Button */}
         <button
           type="button"
           onClick={handleDownload}
           disabled={isDownloading}
-          className={`flex-shrink-0 p-2.5 rounded-lg border text-xs font-medium flex items-center gap-1.5 transition-all ${
+          className={`flex-shrink-0 p-1.5 rounded transition-colors ${
             downloadSuccess
-              ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/40"
-              : "bg-studio-border/40 hover:bg-studio-cyan/15 text-studio-muted hover:text-studio-cyan border-studio-border/80 hover:border-studio-cyan/40"
+              ? "text-emerald-400"
+              : "text-studio-muted hover:text-white"
           }`}
           title="Download MP3"
         >
           {downloadSuccess ? (
             <Check className="w-4 h-4 text-emerald-400" />
           ) : (
-            <Download className={`w-4 h-4 ${isDownloading ? "animate-bounce" : ""}`} />
+            <Download className="w-4 h-4" />
           )}
         </button>
       </div>
     );
   }
 
-  // Grid Mode Card
+  // Grid Mode Card (Clean, unboxed styling)
   return (
     <div
       onClick={() => playSound(sound)}
-      className={`group relative flex flex-col justify-between p-4 rounded-2xl border transition-all duration-200 cursor-pointer ${
+      className={`group flex flex-col justify-between p-3.5 rounded-xl border transition-all cursor-pointer ${
         isActive
-          ? "bg-studio-card border-studio-cyan/60 shadow-xl shadow-studio-cyan/5 -translate-y-0.5"
-          : "bg-studio-surface/60 border-studio-border/80 hover:bg-studio-card hover:border-studio-borderLight hover:-translate-y-1 hover:shadow-lg"
+          ? "bg-studio-surface border-studio-cyan/60"
+          : "bg-studio-surface/40 border-studio-border/60 hover:border-studio-border hover:bg-studio-surface/70"
       }`}
     >
-      {/* Top Row: Category Pill & Duration */}
-      <div className="flex items-center justify-between text-xs mb-3">
-        <span className="capitalize px-2 py-0.5 rounded-full bg-studio-border/70 text-studio-cyan font-mono text-[11px] font-medium tracking-wide">
+      <div className="flex items-center justify-between text-xs mb-2">
+        <span className="capitalize text-[11px] font-mono text-studio-muted">
           {sound.category}
         </span>
-        <span className="font-mono text-studio-muted text-xs">
+        <span className="font-mono text-[11px] text-studio-muted">
           {formatDuration(sound.duration)}
         </span>
       </div>
 
-      {/* Middle: Title & Creator */}
-      <div className="mb-3">
-        <h3 className="font-semibold text-base text-studio-text truncate group-hover:text-studio-cyan transition-colors" title={sound.title}>
+      <div className="mb-2">
+        <h3 className="font-medium text-sm text-white truncate group-hover:text-studio-cyan transition-colors" title={sound.title}>
           {sound.title}
         </h3>
-        <p className="text-xs text-studio-muted mt-0.5 truncate">
-          {sound.creator ? `by ${sound.creator}` : "Royalty-Free"}
+        <p className="text-[11px] text-studio-muted truncate">
+          {sound.creator ? sound.creator : "Royalty-free"}
         </p>
       </div>
 
-      {/* Interactive Waveform Visualizer */}
-      <div className="my-2 py-1 px-2 rounded-lg bg-studio-bg/60 border border-studio-border/40">
+      {/* Waveform */}
+      <div className="my-1.5 py-1 px-1.5 rounded bg-studio-bg/60">
         <Waveform
           id={sound.id}
           duration={sound.duration}
           currentTime={isActive ? currentTime : 0}
           isActive={isActive}
+          peaks={sound.peaks}
           onSeek={(sec) => {
             if (!isActive) playSound(sound);
             seekTo(sec);
@@ -171,26 +173,26 @@ export function SoundCard({ sound, viewMode = "grid" }: SoundCardProps) {
         />
       </div>
 
-      {/* Bottom Controls Row: Play/Pause & Download */}
-      <div className="flex items-center justify-between mt-3 pt-3 border-t border-studio-border/50">
+      {/* Bottom Action Row */}
+      <div className="flex items-center justify-between mt-2 pt-2 border-t border-studio-border/30">
         <button
           type="button"
           onClick={handlePlayToggle}
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+          className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium transition-colors ${
             isThisPlaying
-              ? "bg-studio-cyan text-black font-semibold shadow-md shadow-studio-cyan/20"
-              : "bg-studio-border/80 text-studio-text hover:bg-studio-cyan hover:text-black"
+              ? "bg-studio-cyan text-black"
+              : "bg-studio-surface text-white hover:bg-studio-border"
           }`}
         >
           {isThisPlaying ? (
             <>
-              <Pause className="w-3.5 h-3.5 fill-current" />
-              <span>Playing</span>
+              <Pause className="w-3 h-3 fill-current" />
+              <span>Pause</span>
             </>
           ) : (
             <>
-              <Play className="w-3.5 h-3.5 fill-current" />
-              <span>Preview</span>
+              <Play className="w-3 h-3 fill-current ml-0.5" />
+              <span>Play</span>
             </>
           )}
         </button>
@@ -199,17 +201,15 @@ export function SoundCard({ sound, viewMode = "grid" }: SoundCardProps) {
           type="button"
           onClick={handleDownload}
           disabled={isDownloading}
-          className={`p-2 rounded-lg text-xs flex items-center gap-1.5 transition-colors border ${
-            downloadSuccess
-              ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/40"
-              : "bg-studio-border/40 hover:bg-studio-cyan/15 text-studio-muted hover:text-studio-cyan border-studio-border/80 hover:border-studio-cyan/40"
+          className={`p-1.5 rounded text-studio-muted hover:text-white transition-colors ${
+            downloadSuccess ? "text-emerald-400" : ""
           }`}
           title="Download MP3"
         >
           {downloadSuccess ? (
-            <Check className="w-4 h-4 text-emerald-400" />
+            <Check className="w-3.5 h-3.5 text-emerald-400" />
           ) : (
-            <Download className={`w-4 h-4 ${isDownloading ? "animate-bounce" : ""}`} />
+            <Download className="w-3.5 h-3.5" />
           )}
         </button>
       </div>
