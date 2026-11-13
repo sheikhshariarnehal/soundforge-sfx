@@ -13,6 +13,7 @@ interface AudioContextType {
   volume: number;
   isMuted: boolean;
   error: string | null;
+  audioRef: React.RefObject<HTMLAudioElement | null>;
   playSound: (sound: SoundItem) => void;
   pauseSound: () => void;
   togglePlay: () => void;
@@ -63,7 +64,6 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     };
 
     const onError = () => {
-      // If direct R2 CDN URL failed (e.g. 403 public bucket disabled), fallback to S3 stream API
       const current = activeSoundRef.current;
       if (current && !audio.src.includes("/api/audio/")) {
         console.warn(`Direct stream failed for ${current.title}, falling back to proxy stream...`);
@@ -94,10 +94,25 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
+  // 60 FPS RequestAnimationFrame loop to update currentTime smoothly while playing
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    let animId: number;
+    const tick = () => {
+      if (audioRef.current && !audioRef.current.paused) {
+        setCurrentTime(audioRef.current.currentTime);
+      }
+      animId = requestAnimationFrame(tick);
+    };
+
+    animId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(animId);
+  }, [isPlaying]);
+
   // Global Spacebar Keydown Handler
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't trigger if user is focused inside an input, textarea or search box
       const target = e.target as HTMLElement;
       if (
         target &&
@@ -143,7 +158,6 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     setCurrentTime(0);
     setDuration(sound.duration || 0);
 
-    // Set initial audio source
     audio.src = sound.audioUrl;
     audio.playbackRate = playbackRate;
     audio.loop = isLooping;
@@ -155,7 +169,6 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       })
       .catch((err) => {
         console.warn("Audio play blocked or waiting for user interaction:", err);
-        // Fallback to proxy route if direct URL rejected
         if (!audio.src.includes("/api/audio/")) {
           audio.src = `/api/audio/${encodeURIComponent(sound.category)}/${encodeURIComponent(sound.filename)}`;
           audio.play().then(() => setIsPlaying(true)).catch((e) => {
@@ -242,6 +255,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
         volume,
         isMuted,
         error,
+        audioRef,
         playSound,
         pauseSound,
         togglePlay,
