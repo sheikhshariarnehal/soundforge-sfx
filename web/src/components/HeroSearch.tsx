@@ -103,14 +103,7 @@ export function HeroSearch({
           >
             <X className="w-3.5 h-3.5" />
           </button>
-        ) : (
-          <kbd
-            title="Press / to focus search"
-            className="hidden sm:inline-block ml-1.5 px-1.5 py-0.5 rounded bg-studio-bg text-[10px] font-mono text-studio-muted select-none cursor-default"
-          >
-            /
-          </kbd>
-        )}
+        ) : null}
       </div>
 
       {/* Popular Tags */}
