@@ -187,15 +187,15 @@ export function Waveform({
       style={{ height: `${height}px` }}
       className="relative w-full flex items-center cursor-pointer select-none group py-1"
     >
-      {/* 1. Background Unplayed Waveform (Muted Slate) */}
+      {/* 1. Background Unplayed Waveform (Clean visible neutral slate) */}
       <svg
         viewBox="0 0 1000 60"
         preserveAspectRatio="none"
         className={`w-full h-full block transition-colors duration-150 ${
-          isActive ? "text-slate-600" : "text-slate-800 group-hover:text-slate-700"
+          isActive ? "text-slate-400" : "text-slate-500/50 group-hover:text-slate-400/80"
         }`}
       >
-        <path d={baselineData} stroke="rgba(148, 163, 184, 0.2)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+        <path d={baselineData} stroke="rgba(255, 255, 255, 0.16)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
         <path d={pathData} fill="currentColor" />
       </svg>
 

@@ -12,20 +12,23 @@ interface FilterBarProps {
   viewMode: "grid" | "list";
   onViewModeChange: (mode: "grid" | "list") => void;
   totalResults: number;
+  searchQuery?: string;
+  selectedCategory?: string;
+  onResetAll?: () => void;
 }
 
-const DURATION_OPTIONS: { label: string; value: DurationFilter }[] = [
-  { label: "All", value: "all" },
-  { label: "< 3s", value: "short" },
-  { label: "3–10s", value: "medium" },
-  { label: "> 10s", value: "long" },
+const DURATION_OPTIONS: { label: string; value: DurationFilter; title: string }[] = [
+  { label: "All", value: "all", title: "All sound durations" },
+  { label: "< 3s", value: "short", title: "Sounds under 3 seconds (one-shots)" },
+  { label: "3–10s", value: "medium", title: "Sounds between 3 and 10 seconds" },
+  { label: "> 10s", value: "long", title: "Sounds longer than 10 seconds (ambient/loops)" },
 ];
 
 const SORT_OPTIONS: { label: string; value: SortOption }[] = [
-  { label: "Relevant", value: "relevance" },
-  { label: "Shortest first", value: "duration-asc" },
-  { label: "Longest first", value: "duration-desc" },
-  { label: "A–Z", value: "title-asc" },
+  { label: "Most relevant", value: "relevance" },
+  { label: "Shortest duration", value: "duration-asc" },
+  { label: "Longest duration", value: "duration-desc" },
+  { label: "Alphabetical (A–Z)", value: "title-asc" },
 ];
 
 export function FilterBar({
@@ -36,24 +39,52 @@ export function FilterBar({
   viewMode,
   onViewModeChange,
   totalResults,
+  searchQuery,
+  selectedCategory,
+  onResetAll,
 }: FilterBarProps) {
+  const isFiltered = Boolean(
+    (searchQuery && searchQuery.trim() !== "") ||
+    (selectedCategory && selectedCategory.toLowerCase() !== "all") ||
+    duration !== "all" ||
+    sort !== "relevance"
+  );
+
   return (
     <div className="max-w-7xl mx-auto w-full px-2 sm:px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-xs border-y border-studio-border/50">
       {/* Left: Result count + Duration tabs */}
-      <div className="flex items-center gap-4 flex-wrap">
+      <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
         <span className="font-mono text-studio-muted text-xs">
-          <strong className="text-white font-medium">{totalResults}</strong> sounds
+          <strong className="text-white font-medium">{totalResults.toLocaleString()}</strong>{" "}
+          {totalResults === 1 ? "sound" : "sounds"}
         </span>
 
-        <div className="flex items-center gap-1 bg-studio-surface/60 p-0.5 rounded-lg border border-studio-border/60">
+        {isFiltered && onResetAll && (
+          <button
+            type="button"
+            onClick={onResetAll}
+            className="text-[11px] text-studio-cyan hover:underline hover:text-cyan-300 font-mono transition-colors"
+          >
+            Reset filters
+          </button>
+        )}
+
+        <div
+          className="flex items-center gap-1 bg-studio-surface/60 p-0.5 rounded-lg border border-studio-border/60"
+          role="group"
+          aria-label="Filter by duration"
+        >
           {DURATION_OPTIONS.map((opt) => (
             <button
               key={opt.value}
               type="button"
               onClick={() => onDurationChange(opt.value)}
+              title={opt.title}
+              aria-label={opt.title}
+              aria-pressed={duration === opt.value}
               className={`px-2.5 py-1 rounded-md font-medium text-xs transition-colors ${
                 duration === opt.value
-                  ? "bg-studio-border text-white"
+                  ? "bg-studio-border text-white shadow-sm"
                   : "text-studio-muted hover:text-white"
               }`}
             >
@@ -70,6 +101,7 @@ export function FilterBar({
           <select
             value={sort}
             onChange={(e) => onSortChange(e.target.value as SortOption)}
+            aria-label="Sort sounds by"
             className="bg-transparent text-white text-xs focus:outline-none cursor-pointer"
           >
             {SORT_OPTIONS.map((opt) => (
@@ -85,9 +117,11 @@ export function FilterBar({
             type="button"
             onClick={() => onViewModeChange("list")}
             className={`p-1.5 rounded-md transition-colors ${
-              viewMode === "list" ? "bg-studio-border text-white" : "text-studio-muted hover:text-white"
+              viewMode === "list" ? "bg-studio-border text-white shadow-sm" : "text-studio-muted hover:text-white"
             }`}
-            title="List View"
+            title="List view"
+            aria-label="Switch to list view"
+            aria-pressed={viewMode === "list"}
           >
             <List className="w-3.5 h-3.5" />
           </button>
@@ -95,9 +129,11 @@ export function FilterBar({
             type="button"
             onClick={() => onViewModeChange("grid")}
             className={`p-1.5 rounded-md transition-colors ${
-              viewMode === "grid" ? "bg-studio-border text-white" : "text-studio-muted hover:text-white"
+              viewMode === "grid" ? "bg-studio-border text-white shadow-sm" : "text-studio-muted hover:text-white"
             }`}
-            title="Grid View"
+            title="Grid view"
+            aria-label="Switch to grid view"
+            aria-pressed={viewMode === "grid"}
           >
             <LayoutGrid className="w-3.5 h-3.5" />
           </button>

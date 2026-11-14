@@ -121,6 +121,9 @@ export function SoundExplorer({ initialQuery = "" }: SoundExplorerProps) {
             viewMode={viewMode}
             onViewModeChange={setViewMode}
             totalResults={filteredSounds.length}
+            searchQuery={query}
+            selectedCategory={selectedCategory}
+            onResetAll={handleResetFilters}
           />
 
           <section className="mt-4">
@@ -139,14 +142,23 @@ export function SoundExplorer({ initialQuery = "" }: SoundExplorerProps) {
                 </div>
               )
             ) : (
-              <div className="text-center py-16 px-4 rounded-xl border border-dashed border-studio-border bg-studio-surface/20 my-6">
-                <p className="text-sm text-studio-muted">No sound effects matched your search.</p>
+              <div className="text-center py-16 px-4 rounded-xl border border-dashed border-studio-border bg-studio-surface/20 my-6 max-w-lg mx-auto">
+                <h2 className="text-base font-semibold text-white mb-1.5">
+                  {query.trim()
+                    ? `No sounds found for "${query.trim()}"`
+                    : "No sounds match the selected filters"}
+                </h2>
+                <p className="text-xs sm:text-sm text-studio-muted mb-5 leading-relaxed">
+                  {query.trim()
+                    ? "Try searching for broader keywords like swoosh, riser, pop, or click, or reset filters to browse the full library."
+                    : "Try adjusting your category or duration filters to see more results."}
+                </p>
                 <button
                   type="button"
                   onClick={handleResetFilters}
-                  className="mt-3 px-3 py-1.5 rounded-lg bg-studio-surface border border-studio-border text-white text-xs hover:border-studio-borderLight transition-colors"
+                  className="px-4 py-2 rounded-lg bg-studio-surface border border-studio-border text-white text-xs font-medium hover:border-studio-cyan/60 hover:text-studio-cyan transition-colors"
                 >
-                  Reset filters
+                  Clear filters and show all sounds
                 </button>
               </div>
             )}

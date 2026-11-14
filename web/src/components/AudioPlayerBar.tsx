@@ -118,6 +118,7 @@ export function AudioPlayerBar() {
           step={0.01}
           value={currentTime}
           onChange={(e) => seekTo(parseFloat(e.target.value))}
+          aria-label="Audio scrubber"
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
         />
       </div>
@@ -143,6 +144,7 @@ export function AudioPlayerBar() {
             onClick={() => seekTo(0)}
             className="p-1.5 rounded text-studio-muted hover:text-white transition-colors"
             title="Replay from start"
+            aria-label="Replay from start"
           >
             <RotateCcw className="w-4 h-4" />
           </button>
@@ -151,7 +153,8 @@ export function AudioPlayerBar() {
             type="button"
             onClick={togglePlay}
             className="w-10 h-10 rounded-full bg-studio-cyan text-black flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
-            aria-label={isPlaying ? "Pause" : "Play"}
+            aria-label={isPlaying ? `Pause ${activeSound.title}` : `Play ${activeSound.title}`}
+            title={isPlaying ? "Pause" : "Play"}
           >
             {isPlaying ? (
               <Pause className="w-4 h-4 fill-current" />
@@ -166,7 +169,9 @@ export function AudioPlayerBar() {
             className={`p-1.5 rounded transition-colors ${
               isLooping ? "text-studio-cyan" : "text-studio-muted hover:text-white"
             }`}
-            title={isLooping ? "Loop enabled" : "Loop disabled"}
+            title={isLooping ? "Looping enabled" : "Looping disabled"}
+            aria-label={isLooping ? "Disable loop" : "Enable loop"}
+            aria-pressed={isLooping}
           >
             <Repeat className="w-4 h-4" />
           </button>
@@ -183,6 +188,7 @@ export function AudioPlayerBar() {
             <select
               value={playbackRate}
               onChange={(e) => setPlaybackRate(parseFloat(e.target.value))}
+              aria-label="Playback speed"
               className="bg-transparent text-studio-muted hover:text-white text-xs font-mono focus:outline-none cursor-pointer"
             >
               {SPEED_OPTIONS.map((rate) => (
@@ -200,6 +206,7 @@ export function AudioPlayerBar() {
               onClick={toggleMute}
               className="text-studio-muted hover:text-white p-1"
               title={isMuted ? "Unmute" : "Mute"}
+              aria-label={isMuted ? "Unmute audio" : "Mute audio"}
             >
               {isMuted || volume === 0 ? (
                 <VolumeX className="w-4 h-4 text-rose-400" />
@@ -214,6 +221,7 @@ export function AudioPlayerBar() {
               step={0.05}
               value={isMuted ? 0 : volume}
               onChange={(e) => setVolume(parseFloat(e.target.value))}
+              aria-label="Volume slider"
               className="w-16 h-1 bg-studio-border rounded-lg appearance-none cursor-pointer accent-studio-cyan"
             />
           </div>
@@ -223,6 +231,8 @@ export function AudioPlayerBar() {
             type="button"
             onClick={handleDownload}
             disabled={isDownloading}
+            aria-label={downloadSuccess ? `${activeSound.title} downloaded` : `Download ${activeSound.title} MP3`}
+            title={downloadSuccess ? "Downloaded" : isDownloading ? "Downloading..." : `Download ${activeSound.title} (MP3)`}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               downloadSuccess
                 ? "text-emerald-400 bg-emerald-500/10"

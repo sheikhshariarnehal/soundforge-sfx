@@ -68,7 +68,8 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
               ? "bg-studio-cyan text-black"
               : "bg-studio-surface text-studio-muted group-hover:text-white group-hover:bg-studio-border"
           }`}
-          aria-label={isThisPlaying ? "Pause" : "Play"}
+          aria-label={isThisPlaying ? `Pause ${sound.title}` : `Play ${sound.title}`}
+          title={isThisPlaying ? `Pause ${sound.title}` : `Play ${sound.title}`}
         >
           {isThisPlaying ? (
             <Pause className="w-3.5 h-3.5 fill-current" />
@@ -118,7 +119,8 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
               ? "text-emerald-400"
               : "text-studio-muted hover:text-white"
           }`}
-          title="Download MP3"
+          title={downloadSuccess ? "Downloaded" : isDownloading ? "Downloading..." : `Download ${sound.title} (MP3)`}
+          aria-label={downloadSuccess ? `${sound.title} downloaded` : `Download ${sound.title} MP3`}
         >
           {downloadSuccess ? (
             <Check className="w-4 h-4 text-emerald-400" />
@@ -178,6 +180,8 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
         <button
           type="button"
           onClick={handlePlayToggle}
+          aria-label={isThisPlaying ? `Pause ${sound.title}` : `Play ${sound.title}`}
+          title={isThisPlaying ? `Pause ${sound.title}` : `Play ${sound.title}`}
           className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium transition-colors ${
             isThisPlaying
               ? "bg-studio-cyan text-black"
@@ -201,10 +205,11 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
           type="button"
           onClick={handleDownload}
           disabled={isDownloading}
+          aria-label={downloadSuccess ? `${sound.title} downloaded` : `Download ${sound.title} MP3`}
+          title={downloadSuccess ? "Downloaded" : isDownloading ? "Downloading..." : `Download ${sound.title} (MP3)`}
           className={`p-1.5 rounded text-studio-muted hover:text-white transition-colors ${
             downloadSuccess ? "text-emerald-400" : ""
           }`}
-          title="Download MP3"
         >
           {downloadSuccess ? (
             <Check className="w-3.5 h-3.5 text-emerald-400" />

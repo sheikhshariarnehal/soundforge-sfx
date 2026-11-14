@@ -39,14 +39,18 @@ export function CategoryChips({
       {/* Categories Horizontal Scroll Bar */}
       <div
         ref={scrollContainerRef}
+        role="region"
+        aria-label="Filter sounds by category"
         className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 w-full scroll-smooth"
       >
         <button
           type="button"
           onClick={() => onSelectCategory("all")}
+          aria-label="Show all categories"
+          aria-pressed={selectedCategory === "all"}
           className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors flex-shrink-0 ${
             selectedCategory === "all"
-              ? "bg-studio-cyan text-black font-semibold"
+              ? "bg-studio-cyan text-black font-semibold shadow-sm"
               : "text-studio-muted hover:text-white hover:bg-studio-surface/80"
           }`}
         >
@@ -62,9 +66,11 @@ export function CategoryChips({
               key={cat.name}
               type="button"
               onClick={() => onSelectCategory(cat.name)}
+              aria-label={`Category: ${displayName}`}
+              aria-pressed={isSelected}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize whitespace-nowrap transition-colors flex-shrink-0 ${
                 isSelected
-                  ? "bg-studio-cyan text-black font-semibold"
+                  ? "bg-studio-cyan text-black font-semibold shadow-sm"
                   : "text-studio-muted hover:text-white hover:bg-studio-surface/80"
               }`}
             >
