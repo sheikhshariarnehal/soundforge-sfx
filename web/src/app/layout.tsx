@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className="bg-studio-bg text-studio-text min-h-screen flex flex-col antialiased selection:bg-studio-cyan selection:text-black">
+      <body className="bg-studio-bg text-studio-text min-h-screen flex flex-col antialiased selection:bg-studio-primary selection:text-black">
         <AudioProvider>
           {children}
         </AudioProvider>

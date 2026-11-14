@@ -210,7 +210,7 @@ export function Waveform({
         <svg
           viewBox="0 0 1000 60"
           preserveAspectRatio="none"
-          className="w-full h-full block text-studio-cyan"
+          className="w-full h-full block text-studio-primary"
         >
           <path d={pathData} fill="currentColor" />
         </svg>
@@ -219,7 +219,7 @@ export function Waveform({
       {/* 3. Vertical Playhead Line */}
       <div
         ref={playheadRef}
-        className="absolute top-0 bottom-0 w-[1.5px] bg-white/90 pointer-events-none z-20 shadow-sm will-change-[left]"
+        className="absolute top-0 bottom-0 w-[1.5px] bg-studio-primary pointer-events-none z-20 shadow-sm will-change-[left]"
         style={{ display: "none" }}
       />
 
@@ -232,7 +232,7 @@ export function Waveform({
           />
           {duration > 0 && (
             <div
-              className="absolute -top-7 transform -translate-x-1/2 pointer-events-none z-30 px-1.5 py-0.5 rounded bg-black/90 border border-studio-border text-[10px] font-mono text-studio-cyan shadow-xl whitespace-nowrap"
+              className="absolute -top-7 transform -translate-x-1/2 pointer-events-none z-30 px-1.5 py-0.5 rounded bg-studio-surface border border-studio-border text-[10px] font-mono text-studio-primary shadow-xl whitespace-nowrap"
               style={{ left: `${hoverState.x}px` }}
             >
               {formatTime(hoverState.pct * duration)}

@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --background: #090d16;
+  --background: #131416;
+  --surface: #28292B;
+  --primary: #D4ED41;
   --foreground: #f8fafc;
 }
 
@@ -21,16 +23,17 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: #131416;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #28292B;
+  border: 1px solid #38393D;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #38393D;
 }
 
 /* Hide scrollbar for category horizontal pill slider */

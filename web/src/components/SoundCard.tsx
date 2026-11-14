@@ -55,35 +55,35 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
         onClick={() => playSound(sound)}
         className={`group flex items-center justify-between gap-3 sm:gap-4 px-3 sm:px-4 py-2 transition-colors cursor-pointer ${
           isActive
-            ? "bg-white/[0.04] text-white"
-            : "hover:bg-white/[0.02] text-neutral-300"
+            ? "bg-studio-surface border-l-2 border-studio-primary text-white"
+            : "hover:bg-studio-surface/50 text-neutral-300"
         }`}
       >
         {/* Play/Pause Button */}
         <button
           type="button"
           onClick={handlePlayToggle}
-          className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
+          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
             isThisPlaying
-              ? "bg-studio-cyan text-black"
-              : "bg-white/[0.05] text-neutral-400 group-hover:text-white group-hover:bg-white/[0.1]"
+              ? "bg-studio-primary text-black font-semibold shadow-sm"
+              : "bg-studio-surface border border-studio-border text-neutral-300 group-hover:text-white group-hover:border-studio-primary/60"
           }`}
           aria-label={isThisPlaying ? `Pause ${sound.title}` : `Play ${sound.title}`}
           title={isThisPlaying ? `Pause ${sound.title}` : `Play ${sound.title}`}
         >
           {isThisPlaying ? (
-            <Pause className="w-3 h-3 fill-current" />
+            <Pause className="w-3.5 h-3.5 fill-current" />
           ) : (
-            <Play className="w-3 h-3 fill-current ml-0.5" />
+            <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
           )}
         </button>
 
         {/* Title & Category */}
         <div className="min-w-[130px] sm:min-w-[190px] max-w-[240px] truncate">
-          <div className="font-medium text-xs sm:text-sm truncate text-neutral-200 group-hover:text-white transition-colors">
+          <div className="font-medium text-xs sm:text-sm truncate text-white group-hover:text-studio-primary transition-colors">
             {sound.title}
           </div>
-          <div className="text-[11px] text-neutral-400/80 truncate flex items-center gap-1.5">
+          <div className="text-[11px] text-studio-muted truncate flex items-center gap-1.5">
             <span className="capitalize">{sound.category}</span>
             {sound.creator && <span className="opacity-60">• {sound.creator}</span>}
           </div>
@@ -105,7 +105,7 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
         </div>
 
         {/* Duration */}
-        <div className="text-xs font-mono text-neutral-400 min-w-[38px] text-right">
+        <div className="text-xs font-mono text-studio-muted min-w-[38px] text-right">
           {formatDuration(sound.duration)}
         </div>
 
@@ -116,16 +116,16 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
           disabled={isDownloading}
           className={`flex-shrink-0 p-1.5 rounded transition-colors ${
             downloadSuccess
-              ? "text-emerald-400"
-              : "text-neutral-400 hover:text-white"
+              ? "text-studio-primary"
+              : "text-studio-muted hover:text-white"
           }`}
           title={downloadSuccess ? "Downloaded" : isDownloading ? "Downloading..." : `Download ${sound.title} (MP3)`}
           aria-label={downloadSuccess ? `${sound.title} downloaded` : `Download ${sound.title} MP3`}
         >
           {downloadSuccess ? (
-            <Check className="w-3.5 h-3.5 text-emerald-400" />
+            <Check className="w-4 h-4 text-studio-primary" />
           ) : (
-            <Download className="w-3.5 h-3.5" />
+            <Download className="w-4 h-4" />
           )}
         </button>
       </div>
@@ -136,32 +136,32 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
   return (
     <div
       onClick={() => playSound(sound)}
-      className={`group flex flex-col justify-between p-3 rounded-lg border transition-all cursor-pointer ${
+      className={`group flex flex-col justify-between p-3.5 rounded-xl border transition-all cursor-pointer ${
         isActive
-          ? "bg-white/[0.04] border-white/20"
-          : "bg-white/[0.015] border-white/[0.06] hover:border-white/10 hover:bg-white/[0.03]"
+          ? "bg-studio-surface border-studio-primary/70 shadow-sm"
+          : "bg-studio-surface/50 border-studio-border hover:border-studio-borderLight hover:bg-studio-surface"
       }`}
     >
       <div className="flex items-center justify-between text-xs mb-1.5">
-        <span className="capitalize text-[11px] font-mono text-neutral-400">
+        <span className="capitalize text-[11px] font-mono text-studio-muted">
           {sound.category}
         </span>
-        <span className="font-mono text-[11px] text-neutral-400">
+        <span className="font-mono text-[11px] text-studio-muted">
           {formatDuration(sound.duration)}
         </span>
       </div>
 
       <div className="mb-2">
-        <h3 className="font-medium text-xs sm:text-sm text-neutral-200 truncate group-hover:text-white transition-colors" title={sound.title}>
+        <h3 className="font-medium text-xs sm:text-sm text-white truncate group-hover:text-studio-primary transition-colors" title={sound.title}>
           {sound.title}
         </h3>
-        <p className="text-[11px] text-neutral-400/80 truncate">
+        <p className="text-[11px] text-studio-muted truncate">
           {sound.creator ? sound.creator : "Royalty-free"}
         </p>
       </div>
 
       {/* Waveform */}
-      <div className="my-1 py-1 px-1 rounded bg-black/30">
+      <div className="my-1.5 py-1 px-1.5 rounded bg-studio-bg/90">
         <Waveform
           id={sound.id}
           duration={sound.duration}
@@ -176,7 +176,7 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
       </div>
 
       {/* Bottom Action Row */}
-      <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/[0.04]">
+      <div className="flex items-center justify-between mt-2 pt-2 border-t border-studio-border/60">
         <button
           type="button"
           onClick={handlePlayToggle}
@@ -184,8 +184,8 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
           title={isThisPlaying ? `Pause ${sound.title}` : `Play ${sound.title}`}
           className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium transition-colors ${
             isThisPlaying
-              ? "bg-studio-cyan text-black"
-              : "bg-white/[0.05] text-neutral-300 hover:bg-white/[0.1] hover:text-white"
+              ? "bg-studio-primary text-black font-semibold shadow-sm"
+              : "bg-studio-surface border border-studio-border text-white hover:border-studio-primary/60 hover:text-studio-primary"
           }`}
         >
           {isThisPlaying ? (
@@ -207,12 +207,12 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
           disabled={isDownloading}
           aria-label={downloadSuccess ? `${sound.title} downloaded` : `Download ${sound.title} MP3`}
           title={downloadSuccess ? "Downloaded" : isDownloading ? "Downloading..." : `Download ${sound.title} (MP3)`}
-          className={`p-1.5 rounded text-neutral-400 hover:text-white transition-colors ${
-            downloadSuccess ? "text-emerald-400" : ""
+          className={`p-1.5 rounded text-studio-muted hover:text-white transition-colors ${
+            downloadSuccess ? "text-studio-primary" : ""
           }`}
         >
           {downloadSuccess ? (
-            <Check className="w-3.5 h-3.5 text-emerald-400" />
+            <Check className="w-3.5 h-3.5 text-studio-primary" />
           ) : (
             <Download className="w-3.5 h-3.5" />
           )}

@@ -102,13 +102,13 @@ export function AudioPlayerBar() {
   return (
     <aside
       aria-label="Audio player"
-      className="fixed bottom-0 left-0 right-0 z-50 bg-[#14161d]/95 border-t border-white/[0.08] backdrop-blur-md shadow-xl"
+      className="fixed bottom-0 left-0 right-0 z-50 bg-studio-surface/95 border-t border-studio-border backdrop-blur-md shadow-2xl"
     >
       {/* Top Thin Scrub Bar (No CSS transition lag, instant 60fps tracking) */}
-      <div className="relative w-full h-1 group cursor-pointer bg-white/[0.08]">
+      <div className="relative w-full h-1 group cursor-pointer bg-studio-border">
         <div
           ref={progressBarRef}
-          className="h-full bg-studio-cyan will-change-[width]"
+          className="h-full bg-studio-primary will-change-[width]"
           style={{ width: "0%" }}
         />
         <input
@@ -235,8 +235,8 @@ export function AudioPlayerBar() {
             title={downloadSuccess ? "Downloaded" : isDownloading ? "Downloading..." : `Download ${activeSound.title} (MP3)`}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               downloadSuccess
-                ? "text-emerald-400 bg-emerald-500/10"
-                : "text-white bg-studio-border/60 hover:bg-studio-border"
+                ? "text-studio-primary bg-studio-primary/10 border border-studio-primary/30"
+                : "text-white bg-studio-surface border border-studio-border hover:border-studio-primary/50"
             }`}
           >
             {downloadSuccess ? (

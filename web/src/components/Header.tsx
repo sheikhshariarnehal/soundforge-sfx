@@ -16,14 +16,14 @@ export function Header({ totalSounds }: HeaderProps) {
         {/* Brand Logo & Home Link */}
         <Link
           href="/"
-          className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-1 focus-visible:ring-studio-cyan rounded-lg"
+          className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-1 focus-visible:ring-studio-primary rounded-lg"
           aria-label="SoundForge SFX Home"
         >
-          <div className="w-8 h-8 rounded-lg bg-studio-cyan/15 border border-studio-cyan/30 flex items-center justify-center text-studio-cyan group-hover:bg-studio-cyan/25 transition-colors">
+          <div className="w-8 h-8 rounded-lg bg-studio-primary/15 border border-studio-primary/30 flex items-center justify-center text-studio-primary group-hover:bg-studio-primary/25 transition-colors">
             <Volume2 className="w-4 h-4 stroke-[2.5]" />
           </div>
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-base tracking-tight text-white group-hover:text-studio-cyan transition-colors">
+            <span className="font-semibold text-base tracking-tight text-white group-hover:text-studio-primary transition-colors">
               SoundForge
             </span>
             <span className="text-[10px] font-mono tracking-wider px-1.5 py-0.5 rounded bg-studio-surface border border-studio-border text-studio-muted">

@@ -11,23 +11,26 @@ const config: Config = {
     extend: {
       colors: {
         studio: {
-          bg: "#090d16",
-          surface: "#0f172a",
-          card: "#131c31",
-          border: "#1e293b",
-          borderLight: "#334155",
-          cyan: "#06b6d4",
-          cyanHover: "#22d3ee",
+          bg: "#131416",
+          surface: "#28292B",
+          card: "#1f2022",
+          border: "#38393D",
+          borderLight: "#48494F",
+          primary: "#D4ED41",
+          primaryHover: "#E0F55A",
+          // Alias cyan to primary so all existing studio-cyan references inherit #D4ED41
+          cyan: "#D4ED41",
+          cyanHover: "#E0F55A",
           amber: "#f59e0b",
           amberHover: "#fbbf24",
           text: "#f8fafc",
-          muted: "#94a3b8"
-        }
+          muted: "#9E9FA6",
+        },
       },
       fontFamily: {
         sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"]
-      }
+        mono: ["JetBrains Mono", "monospace"],
+      },
     },
   },
   plugins: [],
