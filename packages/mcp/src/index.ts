@@ -10,6 +10,7 @@ import {
   Tool,
 } from "@modelcontextprotocol/sdk/types.js";
 import { SoundCatalogService } from "./catalog.js";
+import { runInstaller } from "./installer.js";
 
 const server = new Server(
   {
@@ -360,7 +361,16 @@ async function run() {
   console.error("SoundForge SFX MCP Server running on stdio");
 }
 
-run().catch((error) => {
-  console.error("Fatal error running SoundForge SFX MCP Server:", error);
-  process.exit(1);
-});
+// Check CLI commands (e.g. install / --help)
+const argv = process.argv.slice(2);
+if (argv.includes("install") || argv.includes("--install") || argv.includes("setup")) {
+  runInstaller().catch((err) => {
+    console.error("Installation error:", err);
+    process.exit(1);
+  });
+} else {
+  run().catch((error) => {
+    console.error("Fatal error running SoundForge SFX MCP Server:", error);
+    process.exit(1);
+  });
+}
