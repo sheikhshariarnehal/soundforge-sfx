@@ -14,8 +14,8 @@ const config: Config = {
           bg: "#131416",
           surface: "#28292B",
           card: "#1f2022",
-          border: "#38393D",
-          borderLight: "#48494F",
+          border: "transparent",
+          borderLight: "transparent",
           primary: "#D4ED41",
           primaryHover: "#E0F55A",
           // Alias cyan to primary so all existing studio-cyan references inherit #D4ED41

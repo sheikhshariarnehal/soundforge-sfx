@@ -102,10 +102,10 @@ export function AudioPlayerBar() {
   return (
     <aside
       aria-label="Audio player"
-      className="fixed bottom-0 left-0 right-0 z-50 bg-studio-surface/95 border-t border-studio-border backdrop-blur-md shadow-2xl"
+      className="fixed bottom-0 left-0 right-0 z-50 bg-studio-surface/95 backdrop-blur-md shadow-2xl"
     >
       {/* Top Thin Scrub Bar (No CSS transition lag, instant 60fps tracking) */}
-      <div className="relative w-full h-1 group cursor-pointer bg-studio-border">
+      <div className="relative w-full h-1 group cursor-pointer bg-black/30">
         <div
           ref={progressBarRef}
           className="h-full bg-studio-primary will-change-[width]"
@@ -222,7 +222,7 @@ export function AudioPlayerBar() {
               value={isMuted ? 0 : volume}
               onChange={(e) => setVolume(parseFloat(e.target.value))}
               aria-label="Volume slider"
-              className="w-16 h-1 bg-studio-border rounded-lg appearance-none cursor-pointer accent-studio-cyan"
+              className="w-16 h-1 bg-black/40 rounded-lg appearance-none cursor-pointer accent-studio-primary"
             />
           </div>
 
@@ -235,8 +235,8 @@ export function AudioPlayerBar() {
             title={downloadSuccess ? "Downloaded" : isDownloading ? "Downloading..." : `Download ${activeSound.title} (MP3)`}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               downloadSuccess
-                ? "text-studio-primary bg-studio-primary/10 border border-studio-primary/30"
-                : "text-white bg-studio-surface border border-studio-border hover:border-studio-primary/50"
+                ? "text-studio-primary bg-studio-primary/10"
+                : "text-white bg-studio-bg hover:bg-studio-bg/80"
             }`}
           >
             {downloadSuccess ? (
@@ -255,7 +255,7 @@ export function AudioPlayerBar() {
       </div>
 
       {error && (
-        <div className="text-[11px] text-rose-400 bg-rose-950/30 py-0.5 text-center font-mono border-t border-rose-900/30">
+        <div className="text-[11px] text-rose-400 bg-rose-950/30 py-0.5 text-center font-mono">
           {error}
         </div>
       )}

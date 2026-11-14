@@ -53,10 +53,10 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
     return (
       <div
         onClick={() => playSound(sound)}
-        className={`group flex items-center justify-between gap-3 sm:gap-4 px-3 sm:px-4 py-2 transition-colors cursor-pointer ${
+        className={`group flex items-center justify-between gap-3 sm:gap-4 px-3 sm:px-4 py-2 transition-colors cursor-pointer rounded-lg ${
           isActive
-            ? "bg-studio-surface border-l-2 border-studio-primary text-white"
-            : "hover:bg-studio-surface/50 text-neutral-300"
+            ? "bg-studio-surface text-white"
+            : "hover:bg-studio-surface/60 text-neutral-300"
         }`}
       >
         {/* Play/Pause Button */}
@@ -66,7 +66,7 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
           className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
             isThisPlaying
               ? "bg-studio-primary text-black font-semibold shadow-sm"
-              : "bg-studio-surface border border-studio-border text-neutral-300 group-hover:text-white group-hover:border-studio-primary/60"
+              : "bg-studio-surface text-neutral-300 group-hover:text-white"
           }`}
           aria-label={isThisPlaying ? `Pause ${sound.title}` : `Play ${sound.title}`}
           title={isThisPlaying ? `Pause ${sound.title}` : `Play ${sound.title}`}
@@ -136,10 +136,10 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
   return (
     <div
       onClick={() => playSound(sound)}
-      className={`group flex flex-col justify-between p-3.5 rounded-xl border transition-all cursor-pointer ${
+      className={`group flex flex-col justify-between p-3.5 rounded-xl transition-all cursor-pointer ${
         isActive
-          ? "bg-studio-surface border-studio-primary/70 shadow-sm"
-          : "bg-studio-surface/50 border-studio-border hover:border-studio-borderLight hover:bg-studio-surface"
+          ? "bg-studio-surface shadow-md"
+          : "bg-studio-surface/50 hover:bg-studio-surface"
       }`}
     >
       <div className="flex items-center justify-between text-xs mb-1.5">
@@ -176,7 +176,7 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
       </div>
 
       {/* Bottom Action Row */}
-      <div className="flex items-center justify-between mt-2 pt-2 border-t border-studio-border/60">
+      <div className="flex items-center justify-between mt-2 pt-1">
         <button
           type="button"
           onClick={handlePlayToggle}
@@ -185,7 +185,7 @@ export function SoundCard({ sound, viewMode = "list" }: SoundCardProps) {
           className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium transition-colors ${
             isThisPlaying
               ? "bg-studio-primary text-black font-semibold shadow-sm"
-              : "bg-studio-surface border border-studio-border text-white hover:border-studio-primary/60 hover:text-studio-primary"
+              : "bg-studio-surface text-white hover:text-studio-primary"
           }`}
         >
           {isThisPlaying ? (

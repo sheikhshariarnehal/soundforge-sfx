@@ -227,12 +227,12 @@ export function Waveform({
       {hoverState && (
         <>
           <div
-            className="absolute top-0 bottom-0 w-[1px] bg-white/40 border-r border-dashed border-white/60 pointer-events-none z-20"
+            className="absolute top-0 bottom-0 w-[1px] bg-white/60 pointer-events-none z-20"
             style={{ left: `${hoverState.x}px` }}
           />
           {duration > 0 && (
             <div
-              className="absolute -top-7 transform -translate-x-1/2 pointer-events-none z-30 px-1.5 py-0.5 rounded bg-studio-surface border border-studio-border text-[10px] font-mono text-studio-primary shadow-xl whitespace-nowrap"
+              className="absolute -top-7 transform -translate-x-1/2 pointer-events-none z-30 px-2 py-0.5 rounded bg-studio-surface text-[10px] font-mono text-studio-primary shadow-xl whitespace-nowrap"
               style={{ left: `${hoverState.x}px` }}
             >
               {formatTime(hoverState.pct * duration)}

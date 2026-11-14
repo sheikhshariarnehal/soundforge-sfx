@@ -135,14 +135,14 @@ export function SoundExplorer({ initialQuery = "" }: SoundExplorerProps) {
                   ))}
                 </div>
               ) : (
-                <div className="flex flex-col rounded-xl border border-studio-border/70 bg-studio-surface/20 divide-y divide-studio-border/50 overflow-hidden">
+                <div className="flex flex-col gap-1 rounded-xl">
                   {displayedSounds.map((sound) => (
                     <SoundCard key={sound.id} sound={sound} viewMode="list" />
                   ))}
                 </div>
               )
             ) : (
-              <div className="text-center py-16 px-4 rounded-xl border border-dashed border-studio-border bg-studio-surface/20 my-6 max-w-lg mx-auto">
+              <div className="text-center py-16 px-4 rounded-xl bg-studio-surface/40 my-6 max-w-lg mx-auto">
                 <h2 className="text-base font-semibold text-white mb-1.5">
                   {query.trim()
                     ? `No sounds found for "${query.trim()}"`
@@ -156,7 +156,7 @@ export function SoundExplorer({ initialQuery = "" }: SoundExplorerProps) {
                 <button
                   type="button"
                   onClick={handleResetFilters}
-                  className="px-4 py-2 rounded-lg bg-studio-surface border border-studio-border text-white text-xs font-medium hover:border-studio-primary/70 hover:text-studio-primary transition-colors"
+                  className="px-4 py-2 rounded-lg bg-studio-surface text-white text-xs font-medium hover:text-studio-primary transition-colors"
                 >
                   Clear filters and show all sounds
                 </button>
@@ -168,7 +168,7 @@ export function SoundExplorer({ initialQuery = "" }: SoundExplorerProps) {
                 <button
                   type="button"
                   onClick={handleLoadMore}
-                  className="px-5 py-2 rounded-lg bg-studio-surface hover:bg-studio-surface/80 border border-studio-border hover:border-studio-primary/50 text-white text-xs font-medium transition-colors"
+                  className="px-5 py-2 rounded-lg bg-studio-surface hover:bg-studio-surface/80 text-white text-xs font-medium transition-colors"
                 >
                   Load more ({filteredSounds.length - visibleCount} remaining)
                 </button>

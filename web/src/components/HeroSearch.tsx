@@ -77,7 +77,7 @@ export function HeroSearch({
       </p>
 
       {/* Pixabay-style Lean Pill Search Bar */}
-      <div className="relative flex items-center w-full max-w-2xl mx-auto h-12 px-4 sm:px-5 rounded-full bg-studio-surface border border-studio-border hover:border-studio-borderLight focus-within:border-studio-primary/70 focus-within:ring-1 focus-within:ring-studio-primary/30 transition-colors shadow-sm">
+      <div className="relative flex items-center w-full max-w-2xl mx-auto h-12 px-4 sm:px-5 rounded-full bg-studio-surface focus-within:ring-2 focus-within:ring-studio-primary/40 transition-all shadow-md">
         <Search className="w-4 h-4 text-studio-muted mr-2.5 flex-shrink-0" />
         <input
           ref={inputRef}
@@ -97,7 +97,7 @@ export function HeroSearch({
               onClear ? onClear() : onQueryChange("");
               inputRef.current?.focus();
             }}
-            className="p-1 ml-1.5 rounded-full hover:bg-studio-border/80 text-studio-muted hover:text-white transition-colors"
+            className="p-1 ml-1.5 rounded-full hover:bg-studio-bg text-studio-muted hover:text-white transition-colors"
             title="Clear search"
             aria-label="Clear search query"
           >
@@ -106,7 +106,7 @@ export function HeroSearch({
         ) : (
           <kbd
             title="Press / to focus search"
-            className="hidden sm:inline-block ml-1.5 px-1.5 py-0.5 rounded bg-studio-bg border border-studio-border text-[10px] font-mono text-studio-muted select-none cursor-default"
+            className="hidden sm:inline-block ml-1.5 px-1.5 py-0.5 rounded bg-studio-bg text-[10px] font-mono text-studio-muted select-none cursor-default"
           >
             /
           </kbd>
@@ -130,7 +130,7 @@ export function HeroSearch({
               className={`px-2.5 py-1 rounded-md text-xs tracking-wide transition-colors select-none ${
                 isSelected
                   ? "bg-studio-primary text-black font-semibold shadow-sm"
-                  : "bg-studio-surface/80 hover:bg-studio-surface text-neutral-300 hover:text-white border border-studio-border/70 hover:border-studio-borderLight"
+                  : "bg-studio-surface hover:bg-studio-surface/80 text-neutral-300 hover:text-white"
               }`}
             >
               {tag}

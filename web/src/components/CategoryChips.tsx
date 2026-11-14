@@ -30,7 +30,7 @@ export function CategoryChips({
       <button
         type="button"
         onClick={() => scroll("left")}
-        className="hidden md:flex flex-shrink-0 w-6 h-6 rounded-md bg-studio-surface border border-studio-border text-studio-muted hover:text-white hover:border-studio-primary/40 items-center justify-center mr-1.5 transition-colors"
+        className="hidden md:flex flex-shrink-0 w-6 h-6 rounded-md bg-studio-surface text-studio-muted hover:text-white items-center justify-center mr-1.5 transition-colors"
         aria-label="Scroll left"
       >
         <ChevronLeft className="w-3.5 h-3.5" />
@@ -51,7 +51,7 @@ export function CategoryChips({
           className={`px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap transition-colors flex-shrink-0 ${
             selectedCategory === "all"
               ? "bg-studio-primary text-black font-semibold shadow-sm"
-              : "bg-studio-surface/50 border border-studio-border/60 text-studio-muted hover:text-white hover:bg-studio-surface hover:border-studio-border"
+              : "bg-studio-surface/70 text-studio-muted hover:text-white hover:bg-studio-surface"
           }`}
         >
           All
@@ -71,7 +71,7 @@ export function CategoryChips({
               className={`px-2.5 py-1.5 rounded-md text-xs font-normal capitalize whitespace-nowrap transition-colors flex-shrink-0 ${
                 isSelected
                   ? "bg-studio-primary text-black font-semibold shadow-sm"
-                  : "bg-studio-surface/50 border border-studio-border/60 text-studio-muted hover:text-white hover:bg-studio-surface hover:border-studio-border"
+                  : "bg-studio-surface/70 text-studio-muted hover:text-white hover:bg-studio-surface"
               }`}
             >
               {displayName}
@@ -84,7 +84,7 @@ export function CategoryChips({
       <button
         type="button"
         onClick={() => scroll("right")}
-        className="hidden md:flex flex-shrink-0 w-6 h-6 rounded-md bg-studio-surface border border-studio-border text-studio-muted hover:text-white hover:border-studio-primary/40 items-center justify-center ml-1.5 transition-colors"
+        className="hidden md:flex flex-shrink-0 w-6 h-6 rounded-md bg-studio-surface text-studio-muted hover:text-white items-center justify-center ml-1.5 transition-colors"
         aria-label="Scroll right"
       >
         <ChevronRight className="w-3.5 h-3.5" />

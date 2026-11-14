@@ -51,7 +51,7 @@ export function FilterBar({
   );
 
   return (
-    <div className="max-w-7xl mx-auto w-full px-2 sm:px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs border-y border-studio-border/60">
+    <div className="max-w-7xl mx-auto w-full px-2 sm:px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs">
       {/* Left: Result count + Duration tabs */}
       <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
         <span className="font-mono text-studio-muted text-xs">
@@ -70,7 +70,7 @@ export function FilterBar({
         )}
 
         <div
-          className="flex items-center gap-0.5 bg-studio-surface p-0.5 rounded-md border border-studio-border"
+          className="flex items-center gap-0.5 bg-studio-surface p-0.5 rounded-md"
           role="group"
           aria-label="Filter by duration"
         >
@@ -96,7 +96,7 @@ export function FilterBar({
 
       {/* Right: Sort & Layout switcher */}
       <div className="flex items-center gap-2 ml-auto">
-        <div className="flex items-center gap-1.5 bg-studio-surface border border-studio-border rounded-md px-2.5 py-1">
+        <div className="flex items-center gap-1.5 bg-studio-surface rounded-md px-2.5 py-1">
           <ArrowUpDown className="w-3.5 h-3.5 text-studio-muted" />
           <select
             value={sort}
@@ -112,7 +112,7 @@ export function FilterBar({
           </select>
         </div>
 
-        <div className="flex items-center bg-studio-surface border border-studio-border rounded-md p-0.5">
+        <div className="flex items-center bg-studio-surface rounded-md p-0.5">
           <button
             type="button"
             onClick={() => onViewModeChange("list")}
