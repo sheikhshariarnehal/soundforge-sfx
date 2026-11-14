@@ -1,0 +1,44 @@
+{
+  "name": "soundforge-sfx-mcp",
+  "version": "1.0.0",
+  "description": "Model Context Protocol (MCP) server for SoundForge SFX — search, audition, stream, and download 1,400+ royalty-free sound effects for AI agents.",
+  "main": "dist/index.js",
+  "bin": {
+    "soundforge-sfx-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "start": "node dist/index.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "soundforge",
+    "sound-effects",
+    "sfx",
+    "audio",
+    "ai-agent",
+    "claude",
+    "cursor"
+  ],
+  "author": "Sheikh Shariar Nehal",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.0",
+    "fuse.js": "^7.1.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "typescript": "^5.8.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

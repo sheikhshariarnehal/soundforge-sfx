@@ -1,12 +1,26 @@
-# SoundForge SFX — Cloudflare R2 Sound Effect Library & Web Application
+# SoundForge SFX — Cloudflare R2 Sound Effect Library, Web App & MCP Server
 
-A full-stack, royalty-free Sound Effect Library platform powered by **Cloudflare R2** and **Next.js 15**. Includes 1,417 curated audio files organized across 47 categories, an automated multi-threaded R2 sync pipeline, and a modern Dark Studio web interface with scrubbable waveforms and instant search.
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Live-brightgreen.svg)](https://soundforge-sfx.vercel.app)
+[![MCP Ready](https://img.shields.io/badge/MCP-1.6.0-blue.svg)](https://modelcontextprotocol.io/)
+[![Next.js 15](https://img.shields.io/badge/Next.js-15-black.svg)](https://nextjs.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A complete royalty-free Sound Effect Library platform and **Model Context Protocol (MCP)** server powered by **Cloudflare R2** and **Next.js 15**.
+
+Includes **1,417 curated audio files** organized across 47 categories, an automated R2 sync pipeline, a modern Dark Studio web interface with scrubbable waveforms, and a fully featured MCP server enabling AI agents to search, audition, stream, and download sound effects directly into your projects.
+
+---
+
+## 🌐 Live Web App
+- **Production URL:** [https://soundforge-sfx.vercel.app](https://soundforge-sfx.vercel.app)
+- **GitHub Repository:** [https://github.com/sheikhshariarnehal/soundforge-sfx](https://github.com/sheikhshariarnehal/soundforge-sfx)
 
 ---
 
 ## ⚡ Highlights
 
 - **1,417 Curated Sound Effects**: Categorized across 47 sound categories (`swoosh`, `whoosh`, `pop`, `click`, `glitch`, `horror`, `impact`, `foley`, `nature`, and more).
+- **🤖 Built-in MCP Server**: Exposes standard tools to AI agents in Claude Desktop, Cursor, Antigravity, and VS Code Roo/Cline to query and download sounds autonomously.
 - **Cloudflare R2 Zero-Egress Storage**: 100% of the audio files (~1.65 GB) are stored in Cloudflare R2 with optimal immutable caching (`max-age=31536000, immutable`).
 - **Instant Client-Side Search**: Sub-millisecond fuzzy search powered by Fuse.js across titles, categories, and tags with **$0 database cost**.
 - **Interactive Audio Waveforms**: Canvas-based waveform visualizations on every sound with click-to-scrub capabilities.
@@ -15,10 +29,83 @@ A full-stack, royalty-free Sound Effect Library platform powered by **Cloudflare
 
 ---
 
-## 📁 Project Architecture
+## 🤖 Model Context Protocol (MCP) Server for AI Agents
+
+SoundForge SFX includes a standalone Model Context Protocol (MCP) server located in [`packages/mcp`](./packages/mcp). It enables AI agents to find, stream, or download audio assets on demand while building games, video editors, apps, and interactive multimedia.
+
+### 🛠️ Available MCP Tools
+
+| Tool | Description | Parameters |
+| :--- | :--- | :--- |
+| `search_sounds` | Search 1,400+ sound effects using fuzzy matching, categories, and duration limits | `query`, `category`, `minDuration`, `maxDuration`, `limit`, `offset` |
+| `get_sound_details` | Retrieve full metadata and direct Cloudflare R2 streaming URL by sound ID | `soundId` |
+| `list_categories` | List all 47 sound effect categories with available sound counts | *(none)* |
+| `download_sound` | Download a sound effect `.mp3` directly to a local project directory | `soundId`, `targetDirectory`, `filename` (optional) |
+| `get_sound_audio_base64` | Fetch base64-encoded audio for inline agent inspection or multimodal models | `soundId` |
+
+---
+
+### 🔌 Connecting SoundForge MCP to AI Agents
+
+#### 1. Claude Desktop
+Add the following to your `claude_desktop_config.json` (`%APPDATA%\Claude\claude_desktop_config.json` on Windows or `~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+
+```json
+{
+  "mcpServers": {
+    "soundforge-sfx": {
+      "command": "node",
+      "args": ["<PATH_TO_REPO>/packages/mcp/dist/index.js"]
+    }
+  }
+}
+```
+*(Or via npx if published: `"command": "npx", "args": ["-y", "soundforge-sfx-mcp"]`)*
+
+#### 2. Cursor IDE
+1. Go to **Settings** → **Features** → **MCP Servers**.
+2. Click **+ Add New MCP Server**.
+3. Set:
+   - **Name:** `soundforge-sfx`
+   - **Type:** `command`
+   - **Command:** `node "<PATH_TO_REPO>/packages/mcp/dist/index.js"`
+
+#### 3. Antigravity IDE
+Add to your project's MCP configuration or `.gemini/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "soundforge-sfx": {
+      "command": "node",
+      "args": ["<PATH_TO_REPO>/packages/mcp/dist/index.js"]
+    }
+  }
+}
+```
+
+#### 4. VS Code (Cline / Roo Code)
+In your `cline_mcp_settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "soundforge-sfx": {
+      "command": "node",
+      "args": ["<PATH_TO_REPO>/packages/mcp/dist/index.js"],
+      "disabled": false,
+      "autoApprove": ["search_sounds", "get_sound_details", "list_categories"]
+    }
+  }
+}
+```
+
+---
+
+## 📁 Repository Structure
 
 ```
-o:\Vidoe\Sound Effect\
+soundforge-sfx/
 ├── categories/               # 1,417 local audio files across 47 categories
 ├── metadata.csv              # Master audio catalog index
 ├── download_registry.json     # Scraping tracking registry
@@ -28,7 +115,17 @@ o:\Vidoe\Sound Effect\
 ├── .env                      # Cloudflare R2 credentials (git-ignored)
 ├── tests/                    # Automated Python tests
 │
-└── web/                      # Next.js 15 App Router Frontend
+├── packages/
+│   └── mcp/                  # 🤖 SoundForge SFX MCP Server (TypeScript / Node.js)
+│       ├── src/
+│       │   ├── catalog.ts    # Hybrid catalog search, R2 streaming & downloader
+│       │   ├── index.ts      # MCP stdio server with 5 tools & prompt handlers
+│       │   └── types.ts      # TypeScript interfaces
+│       ├── test/             # Unit tests for MCP server tools
+│       ├── package.json
+│       └── README.md
+│
+└── web/                      # 🌐 Next.js 15 App Router Frontend
     ├── public/data/
     │   ├── sounds.json       # Pre-indexed search catalog (1,417 items)
     │   └── categories.json   # 47 category badges with counts
@@ -53,12 +150,13 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 2. Build for Production
+### 2. Build the MCP Server
 
 ```bash
-cd web
+cd packages/mcp
+npm install
 npm run build
-npm run start
+npm test
 ```
 
 ### 3. Re-Sync Audio Files to Cloudflare R2
@@ -96,8 +194,6 @@ R2_BUCKET_NAME=sounds-storage
 NEXT_PUBLIC_R2_PUBLIC_URL=https://pub-f9caeeaaad4d4b068bbfc03bc533c1f9.r2.dev
 ```
 
-> **Note on Public Access**: If you want visitors to stream directly from `https://pub-f9caeeaaad4d4b068bbfc03bc533c1f9.r2.dev`, make sure **Public Access** is enabled for the `sounds-storage` bucket in your Cloudflare dashboard under *R2 > sounds-storage > Settings > Public Access > Allow Access*. The website also features an automated fallback route (`/api/audio/[category]/[filename]`) so audio plays even before public web access is enabled.
-
 ---
 
 ## 🧪 Testing
@@ -105,9 +201,18 @@ NEXT_PUBLIC_R2_PUBLIC_URL=https://pub-f9caeeaaad4d4b068bbfc03bc533c1f9.r2.dev
 Run the full automated test suite:
 
 ```bash
+# MCP Server unit tests (4/4 passing):
+cd packages/mcp && npm test
+
 # Python catalog & uploader tests:
 python -m pytest tests/
 
 # Frontend search & filtering tests:
 cd web && npx tsx src/lib/search.test.mjs
 ```
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE). Sound effects are sourced and curated under royalty-free licenses suitable for commercial and non-commercial creative work.
