@@ -195,7 +195,7 @@ export function Waveform({
           isActive ? "text-slate-400" : "text-slate-500/50 group-hover:text-slate-400/80"
         }`}
       >
-        <path d={baselineData} stroke="rgba(255, 255, 255, 0.16)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+        <path d={baselineData} stroke="rgba(255, 255, 255, 0.1)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
         <path d={pathData} fill="currentColor" />
       </svg>
 
@@ -219,7 +219,7 @@ export function Waveform({
       {/* 3. Vertical Playhead Line */}
       <div
         ref={playheadRef}
-        className="absolute top-0 bottom-0 w-[1.5px] bg-white pointer-events-none z-20 shadow-[0_0_6px_#06b6d4] will-change-[left]"
+        className="absolute top-0 bottom-0 w-[1.5px] bg-white/90 pointer-events-none z-20 shadow-sm will-change-[left]"
         style={{ display: "none" }}
       />
 

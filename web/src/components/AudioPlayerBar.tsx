@@ -102,10 +102,10 @@ export function AudioPlayerBar() {
   return (
     <aside
       aria-label="Audio player"
-      className="fixed bottom-0 left-0 right-0 z-50 bg-studio-surface/95 border-t border-studio-border/80 backdrop-blur-md shadow-2xl"
+      className="fixed bottom-0 left-0 right-0 z-50 bg-[#14161d]/95 border-t border-white/[0.08] backdrop-blur-md shadow-xl"
     >
       {/* Top Thin Scrub Bar (No CSS transition lag, instant 60fps tracking) */}
-      <div className="relative w-full h-1 group cursor-pointer bg-studio-border">
+      <div className="relative w-full h-1 group cursor-pointer bg-white/[0.08]">
         <div
           ref={progressBarRef}
           className="h-full bg-studio-cyan will-change-[width]"

@@ -135,7 +135,7 @@ export function SoundExplorer({ initialQuery = "" }: SoundExplorerProps) {
                   ))}
                 </div>
               ) : (
-                <div className="flex flex-col rounded-xl border border-studio-border/50 bg-studio-surface/20 divide-y divide-studio-border/30 overflow-hidden">
+                <div className="flex flex-col rounded-lg border border-white/[0.06] bg-white/[0.015] divide-y divide-white/[0.04] overflow-hidden">
                   {displayedSounds.map((sound) => (
                     <SoundCard key={sound.id} sound={sound} viewMode="list" />
                   ))}
@@ -168,7 +168,7 @@ export function SoundExplorer({ initialQuery = "" }: SoundExplorerProps) {
                 <button
                   type="button"
                   onClick={handleLoadMore}
-                  className="px-5 py-2 rounded-lg bg-studio-surface hover:bg-studio-border border border-studio-border text-white text-xs font-medium transition-colors"
+                  className="px-4 py-2 rounded-md bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-neutral-300 hover:text-white text-xs transition-colors"
                 >
                   Load more ({filteredSounds.length - visibleCount} remaining)
                 </button>

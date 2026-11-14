@@ -67,18 +67,18 @@ export function HeroSearch({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto pt-8 pb-5 text-center">
-      {/* Title */}
-      <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-2 sm:mb-3">
-        Discover Free <span className="text-studio-cyan">Sound Effects</span>
+    <div className="w-full max-w-3xl mx-auto pt-6 pb-4 text-center">
+      {/* Restrained, Quieter Title */}
+      <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-neutral-100 mb-1.5">
+        Discover Free Sound Effects
       </h1>
-      <p className="text-xs sm:text-sm text-studio-muted mb-6 max-w-xl mx-auto">
-        Search, preview, and download 1,400+ curated royalty-free sounds for video, gamedev, and motion design.
+      <p className="text-xs sm:text-sm text-neutral-400 mb-5 max-w-lg mx-auto">
+        Search, preview, and download 1,400+ royalty-free sounds for video, gamedev, and motion design.
       </p>
 
-      {/* Pixabay-style Pill Search Bar */}
-      <div className="relative flex items-center w-full max-w-3xl mx-auto h-13 sm:h-14 px-5 sm:px-6 rounded-full bg-[#1e2229]/80 hover:bg-[#242932]/90 focus-within:bg-[#242932] backdrop-blur-xl border border-white/10 hover:border-white/20 focus-within:border-studio-cyan/70 focus-within:ring-2 focus-within:ring-studio-cyan/25 shadow-xl shadow-black/30 transition-all duration-200">
-        <Search className="w-5 h-5 text-neutral-400 mr-3 flex-shrink-0" />
+      {/* Pixabay-style Lean Pill Search Bar */}
+      <div className="relative flex items-center w-full max-w-2xl mx-auto h-12 px-4 sm:px-5 rounded-full bg-[#181a20]/90 hover:bg-[#1e2026] focus-within:bg-[#1e2026] backdrop-blur-md border border-white/10 hover:border-white/15 focus-within:border-white/30 focus-within:ring-1 focus-within:ring-white/10 transition-colors shadow-sm">
+        <Search className="w-4 h-4 text-neutral-400 mr-2.5 flex-shrink-0" />
         <input
           ref={inputRef}
           type="text"
@@ -87,7 +87,7 @@ export function HeroSearch({
           onKeyDown={handleKeyDown}
           placeholder="Search for sound effects"
           aria-label="Search sound effects library"
-          className="w-full bg-transparent text-sm sm:text-base text-white placeholder-neutral-400/80 focus:outline-none"
+          className="w-full bg-transparent text-sm text-neutral-100 placeholder-neutral-400 focus:outline-none"
         />
 
         {query ? (
@@ -97,25 +97,25 @@ export function HeroSearch({
               onClear ? onClear() : onQueryChange("");
               inputRef.current?.focus();
             }}
-            className="p-1.5 ml-2 rounded-full hover:bg-white/10 text-neutral-400 hover:text-white transition-colors"
+            className="p-1 ml-1.5 rounded-full hover:bg-white/10 text-neutral-400 hover:text-white transition-colors"
             title="Clear search"
             aria-label="Clear search query"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5" />
           </button>
         ) : (
           <kbd
             title="Press / to focus search"
-            className="hidden sm:inline-block ml-2 px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[11px] font-mono text-neutral-400 select-none cursor-default"
+            className="hidden sm:inline-block ml-1.5 px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/10 text-[10px] font-mono text-neutral-400 select-none cursor-default"
           >
             /
           </kbd>
         )}
       </div>
 
-      {/* Pixabay-style Popular Tags (Soft Rounded Rectangles) */}
+      {/* Quieter Popular Tags */}
       <div
-        className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-4 px-1"
+        className="flex flex-wrap items-center justify-center gap-1.5 mt-3.5 px-1"
         aria-label="Popular search tags"
       >
         {POPULAR_TAGS.map((tag) => {
@@ -127,10 +127,10 @@ export function HeroSearch({
               onClick={() => handleTagClick(tag)}
               aria-label={`Search ${tag} sound effects`}
               aria-pressed={isSelected}
-              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-xs sm:text-[13px] font-normal tracking-wide transition-all duration-150 select-none ${
+              className={`px-2.5 py-1 rounded-md text-xs font-normal tracking-wide transition-colors select-none ${
                 isSelected
-                  ? "bg-studio-cyan text-black font-semibold shadow-md shadow-studio-cyan/30 scale-[1.03]"
-                  : "bg-white/[0.08] hover:bg-white/[0.15] text-neutral-300 hover:text-white border border-white/5 backdrop-blur-sm"
+                  ? "bg-studio-cyan/20 text-studio-cyan border border-studio-cyan/40 font-medium"
+                  : "bg-white/[0.04] hover:bg-white/[0.08] text-neutral-400 hover:text-neutral-200 border border-white/[0.04]"
               }`}
             >
               {tag}
